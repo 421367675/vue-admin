@@ -1,10 +1,29 @@
 # vue-admin
-vue大型多页后台系统构建，陆续更新中
+Vue最新全家桶后台管理系统,底层交互axios
+
+> 账户/密码:admin
+
+# 项目结构(vue-cli)
+|- build  -------------------- server webpack
+|- config  ------------------- webpack配置文件
+|- dist  --------------------- 构建目录
+|- src/  --------------------- 项目源代码
+    |- assets  --------------- 项目资源文件
+    |- components ------------ 相关组件目录
+    |- router  --------------- 路由
+    |- store  ---------------- vuex
+    |- admin.vue  ------------ 后台首页  
+    |- App.vue  -------------- vue入口
+    |- main.js  -------------- 入口文件
+|- static  ------------------- 静态资源目录
+|- .babelrc  ----------------- babel 配置文件
+|- index.html  --------------- HTML 模板
+|- package.json  ------------- npm 配置文件
+|- README.md  ---------------- 项目帮助文档
 
 
-> vue project
 
-## Build Setup
+## 安装
 
 ``` bash
 # install dependencies
@@ -16,8 +35,6 @@ npm run dev
 # build for production with minification
 npm run build
 
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
