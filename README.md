@@ -16,7 +16,7 @@ Vue最新全家桶后台管理系统
 
 ## 界面截图
 ![image](https://github.com/GavinJser/vue-admin/blob/master/static/index.jpg)
-
+![image](https://github.com/GavinJser/vue-admin/blob/master/static/login.jpg)
 
 # 项目结构(vue-cli)
 ``` bash
