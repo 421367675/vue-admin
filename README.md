@@ -4,6 +4,7 @@ Vue最新全家桶后台管理系统,底层交互axios
 > 账户/密码:admin
 
 # 项目结构(vue-cli)
+``` bash
 |- build  -------------------- server webpack
 |- config  ------------------- webpack配置文件
 |- dist  --------------------- 构建目录
@@ -21,6 +22,7 @@ Vue最新全家桶后台管理系统,底层交互axios
 |- package.json  ------------- npm 配置文件
 |- README.md  ---------------- 项目帮助文档
 
+```
 
 
 ## 安装
