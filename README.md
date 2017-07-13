@@ -1,9 +1,22 @@
 # vue-admin
-Vue最新全家桶后台管理系统,底层交互axios
-
+Vue最新全家桶后台管理系统
 > 账户/密码:admin
 
+## 主要技术栈
+* vue
+* vue-router
+* vuex
+* axios
+* element-ui
+* echarts
+* sass
+* ES6/7
+* webpack 2.x
+
+
+## 界面截图
 ![image](https://github.com/GavinJser/vue-admin/blob/master/static/index.jpg)
+
 
 # 项目结构(vue-cli)
 ``` bash
