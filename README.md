@@ -3,6 +3,8 @@ Vue最新全家桶后台管理系统,底层交互axios
 
 > 账户/密码:admin
 
+![image](https://github.com/ButBueatiful/dotvim/raw/master/screenshots/vim-screenshot.jpg)
+
 # 项目结构(vue-cli)
 ``` bash
 |- build  -------------------- server webpack
