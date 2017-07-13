@@ -17,7 +17,7 @@ const router = new Router({
 			      component: path.home,
 			      meta : {
 			      	//验证登录
-			      	requiresAuth : false 
+			      	requiresAuth : true 
 			      }
 			    },
 			    
@@ -65,7 +65,16 @@ const router = new Router({
 			      	//验证登录
 			      	requiresAuth : true 
 			      }
+			    },
+			    {
+			      path: 'axisChart',
+			      component: path.axisChart,
+			      meta : {
+			      	//验证登录
+			      	requiresAuth : true 
+			      }
 			    }
+			    
 			    
       ]
     },
@@ -74,7 +83,6 @@ const router = new Router({
       name : 'login',
       component: path.login
     },
-    
     {
       path: '*',
       component: path.Error

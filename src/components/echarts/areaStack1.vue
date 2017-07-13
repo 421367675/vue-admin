@@ -1,18 +1,16 @@
 <template>
-	<div class="echarts" ref="areaStack" id="areaStack" v-loading="fullScreenShow" element-loading-text="loading..."></div>
+<chart :options="areaStack" ref="areaStack" auto-resize id="areaStack"></chart>
 </template>
 
 <script>
-import Echarts from 'echarts';
-import {mapGetters } from 'vuex'
+import ECharts from 'vue-echarts/components/ECharts.vue'
 
 export default {
 	
-  data(){
+  data: function () {
+
     return {
-      echarts : null ,
-      fullScreenShow : true,
-      echartOption: {
+      areaStack: {
       		color: ['#3398DB'],
 		    title: {
 		        text: '2017销售数据(年度)',
@@ -104,70 +102,28 @@ export default {
 		            data:[500, 700, 501, 154, 190, 330, 50,520,731,502,165,0]
 		        }
 		    ]
-		}
+		}		   
     }
   },
-  
-  computed :{
-  	 ...mapGetters({ globalTimer : 'echartloadingTime'})
+  mounted () {
+  	
+	let areaStack = this.$refs.areaStack;
+	let timeInterval = setInterval(()=>{
+		if( document.getElementById('areaStack').scrollWidth > 0 ){ 
+			clearInterval( timeInterval );
+			areaStack.hideLoading();
+          	areaStack.resize();
+		}
+	},100)
+	areaStack.showLoading({
+        text: 'loading...',
+        color: '#324157',
+        maskColor: 'rgba(229, 233, 242, 0.9)'
+     })	
+     
+ },
+  components: { 
+  	chart: ECharts
   },
-  
-  methods:{
-  	
-  	getSize(){
-  		let elemntChart = this.$refs.areaStack;
-  		return{
-  			x : Math.max( elemntChart.clientWidth, elemntChart.scrollWidth ) ,
-  			y : Math.max( elemntChart.clientHeight, elemntChart.scrollHeight ),
-  			chart : elemntChart
-  		}
-  	},
-  	
-  	reSize(){
-  		
-  		//检测echarts是否在DOM上已经注册过
-  		if( this.echarts ){
-  				this.echarts.dispose();
-  		}
-		this.setSize();
-  		this.echarts = Echarts.init( this.$refs.areaStack );
-  		this.echarts.setOption( this.echartOption );
-  	},
-  	
-  	setSize(){
-  		let chartsSize = this.getSize();
-  		chartsSize.chart.style.height = chartsSize.y + 'px';
-  	},
-  	
-  	initApps(){
-  		
-  		let globalTimer = setTimeout(() =>{
-					this.fullScreenShow = false;
-  				this.reSize();	
-  		}, this.globalTimer )
-  		
-  		window.addEventListener('resize', () =>{
-			this.reSize();
-  			this.echarts.resize();
-  		});
-	  			
-  	}
-  	
-  },
-  
-  mounted(){
-	
-  	this.$nextTick(()=>{
-  		
-  		this.initApps()
-  		
-  	})
-  }
 }
 </script>
-<style scoped lang="scss">
-.axisCharts{
-	height: 100%;
-	width: 100%;
-}
-</style>

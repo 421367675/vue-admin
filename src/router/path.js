@@ -9,3 +9,6 @@ export  const message = r => require.ensure([], () => r(require( '@/components/s
 export  const email = r => require.ensure([], () => r(require( '@/components/setting/email_set_template')), 'email')
 export  const code = r => require.ensure([], () => r(require( '@/components/setting/code_set_template')), 'code')
 export  const login = r => require.ensure([], () => r(require( '@/components/login')), 'login')
+export  const axisChart = r => require.ensure([], () => r(require( '@/components/echarts/axisChart')), 'axisChart')
+
+

@@ -4,31 +4,31 @@
 		<div class="tp-info-statistics">
 			<div class="title_stats_items">
 				<h5><i class="fa  fa-codepen"></i>订单总数</h5>
-				<div class="info-data">5600</div>
+				<div class="info-data">{{orderTotal}}</div>
 				<p class="info-week">上周飙升<span class="green">55%</span></p>
 			</div>	
 			<div class="title_stats_items">
 				<h5><i class="fa fa-thumb-tack"></i>今日订单</h5>
-				<div class="info-data">188</div>
+				<div class="info-data">{{tadayOrder}}</div>
 			</div>
 			<div class="title_stats_items">
 				<h5><i class="fa fa-database"></i>订单总额</h5>
-				<div class="info-data">685,400,00</div>
+				<div class="info-data">{{totalOrderAmount}}</div>
 				<p class="info-week">上周上升<span class="green">55%</span></p>
 			</div>
 			<div class="title_stats_items">
 				<h5><i class="fa fa-globe" ></i>销售统计</h5>
-				<div class="info-data">380</div>
+				<div class="info-data">{{salesOrder}}</div>
 				<p class="info-week">上周飙升升<span class="green">39%</span></p>
 			</div>
 			<div class="title_stats_items">
 				<h5><i class="fa fa-id-card"></i>店铺统计</h5>
-				<div class="info-data">120</div>
+				<div class="info-data">{{shopOrder}}</div>
 				<p class="info-week">上月上升<span class="green">5%</span></p>
 			</div>
 			<div class="title_stats_items">
 				<h5><i class="fa fa-commenting"></i>评论数</h5>
-				<div class="info-data">9930</div>
+				<div class="info-data">{{comments}}</div>
 			</div>
 		</div>
 		<div class="tp-charts-container clearfix">
@@ -46,9 +46,17 @@
 					全国地市销售额</h5>
 				<E-map></E-map>
 			</div>
+			
 		</div>
-		<div class="tp-charts-pie clearfix">
-			<Pie class="echats">echarts</Pie>
+		<div class="tp-charts-container clearfix">
+			<div class="tp-charts-rows">
+				<h5>最新订单</h5>
+				<systemOrder></systemOrder>
+			</div>
+			<div class="tp-charts-rows">
+				<h5>最新上架商品</h5>
+				<systemCommodity></systemCommodity>
+			</div>
 		</div>
 	   
 	</div>
@@ -166,26 +174,43 @@
 </style>
 
 <script>
-import Pie from './echarts/pie'
 import EMap from './echarts/map'
 import AreaStack from './echarts/areaStack'
+import systemOrder from './index/systemOrder'
+import systemCommodity from './index/systemCommodity'
 
-
-//mix-line-bar
 export default {
   data(){
 	return {
-  		fullscreenView : false
+  		fullscreenView : false,
+  		orderTotal : 0,
+  		tadayOrder : 0,
+  		totalOrderAmount : 0,
+  		shopOrder : 0,
+  		salesOrder : 0,
+  		comments : 0
   	}
   },
   components : { 
-  	Pie,
+  	//Pie,
   	EMap,
-  	AreaStack
+  	AreaStack,
+  	systemOrder,
+  	systemCommodity
   },
   
   methods:{
-
+	
+	timerTask( attr , total ){
+		let totalCount = Math.floor((total/7)/15);
+		let totalInter = setInterval( () => {
+			this[attr] += totalCount;
+			if( this[attr] >=  total ){
+				clearInterval( totalInter );
+			}
+		},15)
+	},
+	
   	fullView(){
   		this.fullscreenView = !this.fullscreenView;
   	}
@@ -193,7 +218,15 @@ export default {
   },
   
   mounted(){
-  	//console.log(this)
+  		this.$nextTick(() =>{
+  			this.timerTask('orderTotal' ,5600);
+  			this.timerTask('tadayOrder' ,188);
+  			this.timerTask('totalOrderAmount' ,685400);
+  			this.timerTask('salesOrder' ,380);
+  			this.timerTask('shopOrder' ,10032);
+  			this.timerTask('comments' ,9930);
+  		})
+	  
   }
 }
 </script>

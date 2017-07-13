@@ -18,16 +18,12 @@
 	   			<span class="forget">忘记密码？</span>
 	   		</div>
 	   		<div class="login-item el-login">
-			   	<el-button type="info" size="large" ref="login" @click="login">登陆</el-button>
+			   	<el-button type="info" size="large" ref="login" @click="login" :loading="loading">登陆</el-button>
 		   	</div>
 	   </form>
 	   
-	   <span class="login-animate">
-		   <i class="fa fa-space-shuttle p1"></i>
-		   <i class="fa fa-space-shuttle p2"></i>
-		   <i class="fa fa-space-shuttle p3"></i>
-		   <i class="fa fa-space-shuttle p4"></i>
-		   <i class="fa fa-space-shuttle p5"></i>
+	   <span class="login-animate" >
+		   <i class="fa fa-space-shuttle" v-for="fly in flyAnimate" :key="fly" :class="'p'+ fly"></i>
 	   </span>
 	</div>
 </transition>
@@ -44,7 +40,10 @@ export default {
 	  		userData : {
 	  			name : '',
 	  			password : ''
-	  		}
+	  		},
+	  		loading : false,
+	  		timerSecond : 2000,
+	  		flyAnimate : 5
 	  	}
 	},
 	  
@@ -55,7 +54,7 @@ export default {
 	  
 	methods:{
 	  	...mapMutations({
-	  		setUserDateX : 'USERLOGINDATANODEVUE',
+	  		setStateDate : 'USERLOGINDATANODEVUE',
 	  		setSwitch : 'LOGINSWITCH'
 	  	}),
 	  	
@@ -66,16 +65,20 @@ export default {
 	  	
 	  	login(){
 	  		
-	  		let ac =  this.tempAccount;
 	  		
-	  		if( this.$refs.loginAccount.value != ac.name ){
+	  		
+	  		let tempAccount =  this.tempAccount ,
+	  			ShowTimer;
+	  			
+	  		
+	  		if( this.$refs.loginAccount.value != tempAccount.name ){
 	  			
 		  		this.$message({
 		  			showClose : true,
 		  			message : '用户名输入有误',
 		  			type : 'error'
 		  		})
-	  		}else if( this.$refs.pw.value != ac.password ){
+	  		}else if( this.$refs.pw.value != tempAccount.password ){
 	  			
 		  		this.$message({
 		  			showClose : true,
@@ -84,12 +87,14 @@ export default {
 		  		})
 	  		}else{
 	  			
+	  			this.loading = true;
+	  			let value = this.userData = {
+  					name : this.$refs.loginAccount.value,
+  					password : this.$refs.pw.value
+  				};
+	  			
 	  			//离线缓存用户账号 密码
 	  			if( this.loginSwitchDate ){
-	  				let value = {
-	  					name : this.$refs.loginAccount.value,
-	  					password : this.$refs.pw.value
-	  				};
 	  				
 		  			this.setUserDate({
 		  				key : 'login',
@@ -97,24 +102,31 @@ export default {
 		  			})
 	  			}else{
 	  				//缓存state
-	  				this.setUserDateX({
-	  					name : this.$refs.loginAccount.value,
-	  					password : this.$refs.pw.value
-	  				})
+	  				this.setStateDate( value )
 	  			}
 	  			
-	  			//路由跳转
-	  			this.$router.push({
-		  			path : '/'
+	  			
+	  			ShowTimer = setTimeout(() =>{
+	  				
+	  				clearTimeout( ShowTimer );
+	  				//路由跳转
+		  			this.$router.push({
+			  			path : '/'
+			  		})
+		  			
+	  			}, this.timerSecond )
+	  			
+	  			
+	  			this.$message({
+		  			showClose : true,
+		  			message : '登录中...',
+		  			type: 'info'
 		  		})
 	  			
 	  		}
 	
 	  	},
 	  	
-	  	defaultUser(){
-	  		
-	  	},
 	  	
 	  	userloginSwitch(){
 	  		this.setSwitch( this.loginSwitchDate )
@@ -127,7 +139,7 @@ export default {
 	},
   
   mounted(){
-	this.setUserDateX();
+  	
   	this.SyncloginSwitch();
   	
   	let flag = this;

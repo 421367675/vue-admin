@@ -13,6 +13,10 @@ export default{
 	
 	getloginSwitch : state => state.loginSwitch,
 	
-	getAccountData : state => state.userAccountData
+	getAccountData : state => state.userAccountData,
+	
+	fullScreenShowTimer : state => state.fullScreenShowTimer,
+	
+	echartloadingTime : state => state.fullScreenShowTimer + state.echartloadingTime 
 	
 }

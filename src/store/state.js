@@ -23,6 +23,11 @@ export default{
 	},
 	
 	//登录是否保存账户、密码开关，默认开启
-	loginSwitch : true
+	loginSwitch : true,
+	
+	//页面缓冲 loading
+	fullScreenShowTimer : 200,
+	
+	echartloadingTime : 500
 	
 }

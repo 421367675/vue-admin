@@ -52,7 +52,7 @@
 			  </el-submenu>
 			  <el-submenu index="6">
 				<template slot="title"><i class="fa fa-clipboard"></i>数据监测</template>
-				  <el-menu-item index="4-1"><i class="fa fa-angle-double-right"></i>页面访问</el-menu-item>
+				  <el-menu-item index="/axisChart"><i class="fa fa-angle-double-right"></i>页面访问</el-menu-item>
 				  <el-menu-item index="4-2"><i class="fa fa-angle-double-right"></i>库管理</el-menu-item>
 				  <el-menu-item index="4-3"><i class="fa fa-angle-double-right"></i>模板语言</el-menu-item>
 				  <el-menu-item index="4-4"><i class="fa fa-angle-double-right"></i>模板备份</el-menu-item>

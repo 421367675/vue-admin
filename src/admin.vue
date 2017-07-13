@@ -4,6 +4,7 @@
 		<system-side-menu></system-side-menu>
 		<system-nav-menu></system-nav-menu>
 		<router-view></router-view>
+		<footer>Vue2.x 后台管理系统  ©2017 @by:Gavin  &nbsp;&nbsp;Email: 103979392@qq.com</footer>
 	</div>
 </transition>
 
@@ -32,7 +33,8 @@ export default {
 	},
     methods: {
     	...mapGetters([
-			'getSystemSwitch'
+			'getSystemSwitch',
+			'fullScreenShowTimer'
 		]),
     	//页面初始化 loading
     	loadfull(){
@@ -46,7 +48,7 @@ export default {
     		setTimeout(() => {
     			loadingInstance.close();
           		this.fullScreenShow = false;
-        	}, 2000);
+        	},  this.fullScreenShowTimer() );
         
     	}
     },
@@ -74,5 +76,11 @@ export default {
 	}
 }
 
-
+footer{
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	color: #666;
+	margin-top: 30px;
+}
 </style>
