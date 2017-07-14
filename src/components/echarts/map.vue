@@ -5,13 +5,7 @@
 <script>
 import Echarts from 'echarts';
 import {mapGetters } from 'vuex'
-import 'echarts/theme/dark'
 import chinaMap from '../../assets/charts/china.json'
-import theme from '../../assets/charts/theme.json'
-
-
-Echarts.registerMap('china', chinaMap)
-Echarts.registerTheme('dark', theme)
 
 
 export default {
@@ -126,6 +120,7 @@ export default {
   			this.echarts.dispose();
   		}
 		this.setSize();
+		Echarts.registerMap('china', chinaMap)
   		this.echarts = Echarts.init( this.$refs.chartMap );
   		this.echarts.setOption( this.echartOption );
   	},
@@ -143,6 +138,7 @@ export default {
   		}, this.globalTimer )
   		
   		window.addEventListener('resize', () =>{
+  			if( this.$refs.chartMap == undefined ) return;
 			this.reSize();
   			this.echarts.resize();
   		});

@@ -22,55 +22,72 @@ const router = new Router({
 			    },
 			    
       		{
-			      path: 'setting',
+			      path: '/setting/basic',
 			      name : 'setting',
-			      component: path.setting,
+			      component: path.setting_basic,
 			      meta : {
-			      	//验证登录
 			      	requiresAuth : true 
 			      }
 			    },
 			    
 			    {
-			      path: 'goods',
-			      component: path.goods,
+			      path: '/setting/goods',
+			      component: path.setting_goods,
 			      meta : {
-			      	//验证登录
+			      	requiresAuth : true 
+			      }
+			    },
+			    {
+			      path: '/admin/list',
+			      name : 'setting',
+			      component: path.admin_list,
+			      meta : {
 			      	requiresAuth : true 
 			      }
 			    },
 			    
 			    {
-			      path: 'message',
-			      component: path.message,
+			      path: '/admin/role',
+			      component: path.admin_role,
 			      meta : {
-			      	//验证登录
 			      	requiresAuth : true 
 			      }
 			    },
 			    
 			    {
-			      path: 'email',
-			      component: path.email,
+			      path: '/admin/log',
+			      component: path.admin_log,
 			      meta : {
-			      	//验证登录
 			      	requiresAuth : true 
 			      }
 			    },
 			    
 			    {
-			      path: 'code',
-			      component: path.code,
+			      path: '/member/list',
+			      component: path.member_list,
 			      meta : {
-			      	//验证登录
 			      	requiresAuth : true 
 			      }
 			    },
 			    {
-			      path: 'axisChart',
-			      component: path.axisChart,
+			      path: '/member/goods',
+			      component: path.member_goods,
 			      meta : {
-			      	//验证登录
+			      	requiresAuth : true 
+			      }
+			    },
+
+			    {
+			      path: '/axis/axisChart',
+			      component: path.axis_axisChart,
+			      meta : {
+			      	requiresAuth : true 
+			      }
+			    },
+			    {
+			    	  path: '/axis/pageChartState',
+			      component: path.axis_pageChartState,
+			      meta : {
 			      	requiresAuth : true 
 			      }
 			    }
@@ -105,7 +122,6 @@ router.beforeEach((to, from, next) => {
 			if( islogin ){
 	      next({
 	        path: '/login'
-	        //query: { redirect: to.fullPath } 
 	      });
 			}else{
 				next();

@@ -147,6 +147,7 @@ export default {
   		}, this.globalTimer )
   		
   		window.addEventListener('resize', () =>{
+  			if( this.$refs.areaStack == undefined ) return;
 			this.reSize();
   			this.echarts.resize();
   		});
