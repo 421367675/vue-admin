@@ -1,6 +1,6 @@
 <template>
 <div class="mb-container">
-		待定
+	同列表
 </div>
 </template>
 

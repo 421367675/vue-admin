@@ -1,6 +1,6 @@
 <template>
 <div class="mb-container">
-		待定
+	待定
 </div>
 </template>
 
