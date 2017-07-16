@@ -5,7 +5,6 @@ import router from './router'
 import store from './store'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'element-ui/lib/theme-default/index.css'
-import './assets/css/font-awesome.min.css'
 import elementUI from 'element-ui'
 
 

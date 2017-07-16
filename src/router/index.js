@@ -39,13 +39,25 @@ const router = new Router({
 			    },
 			    {
 			      path: '/admin/list',
-			      name : 'setting',
 			      component: path.admin_list,
 			      meta : {
 			      	requiresAuth : true 
 			      }
 			    },
-			    
+			    {
+			      path: '/admin/list/:edit',
+			      component: path.admin_list_edit,
+			      meta : {
+			      	requiresAuth : true 
+			      }
+			    },
+			    {
+			      path: '/admin/add',
+			      component: path.admin_list_add,
+			      meta : {
+			      	requiresAuth : true 
+			      }
+			    },
 			    {
 			      path: '/admin/role',
 			      component: path.admin_role,
@@ -64,7 +76,15 @@ const router = new Router({
 			    
 			    {
 			      path: '/member/list',
+			      name : 'member',
 			      component: path.member_list,
+			      meta : {
+			      	requiresAuth : true 
+			      }
+			    },
+			    {
+			      path: '/member/list/:edit',
+			      component: path.member_list_edit,
 			      meta : {
 			      	requiresAuth : true 
 			      }

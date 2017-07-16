@@ -17,6 +17,9 @@ export default{
 	
 	fullScreenShowTimer : state => state.fullScreenShowTimer,
 	
-	echartloadingTime : state => state.fullScreenShowTimer + state.echartloadingTime 
+	echartloadingTime : state => state.fullScreenShowTimer + state.echartloadingTime,
+	
+	tableRowsData : state => state.tableRowsData
+	
 	
 }

@@ -1,6 +1,8 @@
 <template>
+<transition name="tp-ani">
 	<div class="mb-container">
 		<div class="mb-button-wrap">
+			<el-button type="primary" icon="add" @click="tabDataAdd">新增</el-button>
 			<el-button type="primary" icon="edit" @click="tabDataEdit">编辑</el-button>
 			<el-button type="primary" icon="delete" @click="tabDataDelete">删除</el-button>
 			<div class="mb-search">
@@ -13,16 +15,13 @@
 
    <el-table :data="tabDate"  border style="width: 99.9%" :row-class-name="tableRowClassName" v-loading="asyncload"  highlight-current-row @select="tabCurrentChange" >
    		<el-table-column type="selection" width="55"></el-table-column>
-	    <el-table-column prop="mumber_data" label="注册时间" ></el-table-column>
-	    <el-table-column prop="id" label="ID" sortable></el-table-column>
-	    <el-table-column prop="mumber_name" label="姓名"></el-table-column>
-	    <el-table-column prop="mumber_contact" label="联系方式" sortable ></el-table-column>
-	    <el-table-column prop="mumber_address" label="地址" sortable></el-table-column>
-	    <el-table-column prop="mumber_capital" label="可用资金" sortable></el-table-column>
-	    <el-table-column prop="mumber_integral" label="消费积分" sortable></el-table-column>
-	    <el-table-column prop="mumber_rank"  label="会员等级"  filter-placement="bottom-end">
+   		<el-table-column prop="server_name" label="名称"></el-table-column>
+	    
+	    <el-table-column prop="id" label="账号" sortable></el-table-column>
+	    <el-table-column prop="server_email" label="Email" sortable ></el-table-column>
+	    <el-table-column prop="server_rank"  label="等级"  filter-placement="bottom-end">
 	      <template scope="scope">
-	        <el-tag :type="scope.row.mumber_rank_class" close-transition>{{scope.row.mumber_rank}}</el-tag>
+	        <el-tag :type="scope.row.server_rank_class" close-transition>{{scope.row.server_rank}}</el-tag>
 	      </template>
 	    </el-table-column>
   </el-table>
@@ -34,17 +33,18 @@
       :current-page="currentPage"
       :page-size="10"
       layout="total, prev, pager, next, jumper"
-      :total="1400">
+      :total="6">
     </el-pagination>
   </div>
 </div>
+</transition>
 </template>
 
 <script>
 import axios from 'axios'
-import { mapGetters,mapMutations } from 'vuex'
+import { mapGetters,mapMutations,mapActions } from 'vuex'
 
-const fetchPath = '../../../static/js/mb_data.json'
+const fetchPath = '../../../static/js/ad_data.json'
 
 export default {
     data() {
@@ -55,30 +55,36 @@ export default {
       	currentPage : 1,
       	tabDeleteTempData : [],
       	tabDeleteTempEdit : '',
+      	stateKey : 'ad_async_state',
       	
         tabDate: [
         	{
-				"mumber_data":"",
+				"server_data":"",
 				"id" : "",
-				"mumber_name":"",
-				"mumber_contact":"",
-				"mumber_address":"",
-				"mumber_capital":"",
-				"mumber_integral":"",
-				"mumber_rank":"",
-				"mumber_rank_class":""
+				"server_name":"",
+				"server_contact":"",
+				"server_address":"",
+				"server_capital":"",
+				"server_integral":"",
+				"server_rank":"",
+				"server_rank_class":""
 			}
         ],
         
         oldData : []
       }
     },
-    
+
     methods:{
     	
     	...mapGetters(['echartloadingTime']),
     	...mapMutations({
-    		tabRowsData : 'SETTABLEEDIT'
+    		tabRowsData : 'SETTABLEEDIT',
+    		setStates : 'SETSTATE'
+    	}),
+    	
+    	...mapActions({
+    		getStates : 'getStateSyncAdminData'
     	}),
     	
     	tableRowClassName(row, index){
@@ -88,12 +94,19 @@ export default {
 	        
 	    },
 	    
+	    //新增
+	    tabDataAdd(){
+	    	this.$router.push({ 
+	    		path : '/admin/add'
+	    	})
+	    },
+	    
 	    //编辑
 	    tabDataEdit(){
 	    	
 	    	this.tabRowsData( this.tabDeleteTempEdit );
 	    	this.$router.push({ 
-	    		path : '/member/list/' + this.tabDeleteTempEdit.id
+	    		path : '/admin/list/' + this.tabDeleteTempEdit.id
 	    	})
 	    	
 	    },
@@ -120,6 +133,7 @@ export default {
 							return item.id != v;
 						});
 					} )
+					this.tabDeleteTempData = [];
 					this.asyncResData( tabDate );
 				
 	    	 })
@@ -140,7 +154,7 @@ export default {
 	    	}
 	    	
 	    	tabDate = this.tabDate.filter( item => {
-	    		return item.mumber_name.indexOf( refsSearchDate ) >= 0 
+	    		return item.server_name.indexOf( refsSearchDate ) >= 0 
             }) 
            
            
@@ -172,34 +186,42 @@ export default {
 		
 		fetchData(){
 			
-			let responseDate = [];
 			this.asyncload = true;
+			let caheDate;
 			
-			axios.get(fetchPath,{params: { currentPage : this.currentPage }})
-			.then( res => {
-            	if( res.data.length > 0  && res.status == 200 ){
-            		Array.forEach(res.data,function(v,k){
-            			if( responseDate.length < 18 ){
-            				let tempCaheData = res.data[Math.floor( Math.random() * res.data.length )];
-            				responseDate = responseDate.filter( item => {
-            					return item.id != tempCaheData.id
-            				})
-            				responseDate.push( tempCaheData )
-            			}
-            		})
-            		this.oldData = responseDate;
-            		this.asyncResData( responseDate );
-            	}
-
-            })
-            .catch(error=>{
-               
-               this.$message({
-                  type: 'info',
-                  message: '请求失败'
-               })
-               
-            });
+			this.getStates(( data ) =>{
+				caheDate = data;
+			})
+			
+			if( caheDate && caheDate.length > 0 ){
+				this.oldData = caheDate;
+	            this.asyncResData( caheDate );
+			}else{
+			
+				axios.get(fetchPath,{params: { currentPage : this.currentPage }})
+				.then( res => {
+	            	if( res.data.length > 0  && res.status == 200 ){
+	            		
+	            		this.oldData = res.data;
+	            		this.asyncResData( res.data );
+	            		
+	            		this.setStates({
+	            			key : this.stateKey,
+	            			value : res.data
+	            		})
+	            		
+	            	}
+	
+	            })
+	            .catch(error=>{
+	               
+	               this.$message({
+	                  type: 'info',
+	                  message: '请求失败'
+	               })
+	               
+	            });
+			}
 		},
 		
 		

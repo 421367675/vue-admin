@@ -28,6 +28,9 @@ export default{
 	//页面缓冲 loading
 	fullScreenShowTimer : 200,
 	
-	echartloadingTime : 500
+	echartloadingTime : 500,
+	
+	//表格编辑数据
+	tableRowsData : null 
 	
 }

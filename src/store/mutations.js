@@ -59,5 +59,17 @@ export default{
 			});
 		
 		}
+	},
+	
+	//list edit
+	[ type.SETTABLEEDIT ]( state , val  ){
+		state.tableRowsData = val;
+	},
+	
+	//list add
+	[ type.ADDTABLESTATE ]( state , data  ){
+		if( state.ad_async_state ){
+			state.ad_async_state.push( data );
+		}
 	}
 }

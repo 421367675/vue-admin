@@ -19,5 +19,10 @@ export default{
 			key : 'login',
 			sync : sync
 		});
+	},
+	
+	//admin list page
+	getStateSyncAdminData( {state,commit } , callback ){
+		callback && callback.call(this,state.ad_async_state)
 	}
 }
