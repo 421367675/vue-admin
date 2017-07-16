@@ -1,5 +1,15 @@
 # vue-admin
 Vue最新全家桶后台管理系统
+> 最近公司项目需要用到vue，此管理后台针对公司需求进行定制，所有数据均为虚拟数据
+
+### 几个核心功能点：
+``` bash
+1、权限登录 axios + localStorage方式进行验证
+2、echarts图标直观展示及敏感数据进行分析
+3、增加模板数据增、删、改、查等功能
+4、axios翻页控制翻页
+
+```
 > 账户/密码:admin
 
 ## 主要技术栈
@@ -17,6 +27,11 @@ Vue最新全家桶后台管理系统
 ## 界面截图
 ![image](https://github.com/GavinJser/vue-admin/blob/master/static/index.jpg)
 ![image](https://github.com/GavinJser/vue-admin/blob/master/static/login.jpg)
+![image](https://github.com/GavinJser/vue-admin/blob/master/static/search.jpg)
+![image](https://github.com/GavinJser/vue-admin/blob/master/static/list.jpg)
+![image](https://github.com/GavinJser/vue-admin/blob/master/static/add.jpg)
+![image](https://github.com/GavinJser/vue-admin/blob/master/static/add1.jpg)
+![image](https://github.com/GavinJser/vue-admin/blob/master/static/edit.jpg)
 
 # 项目结构(vue-cli)
 ``` bash
